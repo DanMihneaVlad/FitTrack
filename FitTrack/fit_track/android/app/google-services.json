@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1035743272259",
+    "project_id": "fittrack-66919",
+    "storage_bucket": "fittrack-66919.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035743272259:android:400dded82ca7fdbbc523f6",
+        "android_client_info": {
+          "package_name": "com.danvlad.fit_track"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035743272259-1fliiefm7lspqd9ep9cb1ckv7oolegq7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO9Jjk_ECfdYO2xi7lpF0eX6GsmyuMOqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035743272259-1fliiefm7lspqd9ep9cb1ckv7oolegq7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
