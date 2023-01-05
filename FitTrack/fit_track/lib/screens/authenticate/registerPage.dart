@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:email_validator/email_validator.dart';
 
 import '../../services/auth.dart';
 
@@ -16,12 +18,15 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
+
+  String error = '';
 
   @override
   void dispose() {
@@ -36,6 +41,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    var inputDecoration = InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            fillColor: Colors.grey[250],
+                            filled: true
+                          );
+    
     return Scaffold(
       backgroundColor: Colors.lightGreen[200],
       body: SafeArea(
@@ -58,127 +77,112 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 20),
           
-                // Email textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Email textfield
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: TextFormField(
+                          controller: _emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty || !EmailValidator.validate(value)) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          },
+                          decoration: inputDecoration.copyWith(hintText: 'Email')
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(12),
+                      SizedBox(height: 10),
+                
+                      // Password textfield
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: TextFormField(
+                          obscureText: true,
+                          controller: _passwordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty || _passwordController.text.trim().length < 6) {
+                              return 'Password should be at least 6 characters long';
+                            }
+                            return null;
+                          },
+                          decoration: inputDecoration.copyWith(hintText: 'Password')
+                        ),
                       ),
-                      hintText: 'Email',
-                      fillColor: Colors.grey[250],
-                      filled: true
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-          
-                // Password textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    obscureText: true,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'Password',
-                      fillColor: Colors.grey[250],
-                      filled: true
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                // Confirm password textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    obscureText: true,
-                    controller: _confirmPasswordController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
+                      // Confirm password textfield
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: TextFormField(
+                          obscureText: true,
+                          controller: _confirmPasswordController,
+                          validator: (value) {
+                            if (_passwordController.text.trim().isNotEmpty) {
+                              if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
+                                return 'Passwords do not match';
+                              }
+                            }
+                            return null;
+                          },
+                          decoration: inputDecoration.copyWith(hintText: 'Confirm Password')
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'Confirm Password',
-                      fillColor: Colors.grey[250],
-                      filled: true
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                // First name textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    controller: _firstNameController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
+                      // First name textfield
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: TextFormField(
+                          controller: _firstNameController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your first name';
+                            }
+                            return null;
+                          },
+                          decoration: inputDecoration.copyWith(hintText: 'First Name'),
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'First Name',
-                      fillColor: Colors.grey[250],
-                      filled: true
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                // Last name textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    controller: _lastNameController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
+                      // Last name textfield
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: TextFormField(
+                          controller: _lastNameController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your last name';
+                            }
+                            return null;
+                          },
+                          decoration: inputDecoration.copyWith(hintText: 'Last Name')
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'Last Name',
-                      fillColor: Colors.grey[250],
-                      filled: true
-                    ),
-                  ),
+                      SizedBox(height: 10),
+                    ]
+                  )
                 ),
-                SizedBox(height: 10),
-          
-                // Log in button
+            
+                // Register button
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: GestureDetector(
                     onTap: () async {
-                      await _auth.register(_emailController.text.trim(), _passwordController.text.trim(), _confirmPasswordController.text.trim(), _firstNameController.text.trim(), _lastNameController.text.trim());
+                      if (_formKey.currentState!.validate()) {
+                        dynamic result = await _auth.register(_emailController.text.trim(), _passwordController.text.trim(), _confirmPasswordController.text.trim(), _firstNameController.text.trim(), _lastNameController.text.trim());
+                        if (result is FirebaseAuthException) {
+                          setState(() => error = result.message ?? 'An error ocurred');
+                        }
+                      }
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(12),
@@ -194,6 +198,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                // Register error
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    error,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(height: 10),

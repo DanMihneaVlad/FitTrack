@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  String error = '';
 
   @override
   void dispose() {
@@ -103,10 +104,13 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: GestureDetector(
                     onTap: () async {
-                      await _auth.signIn(_emailController.text.trim(), _passwordController.text.trim());
+                      dynamic result = await _auth.signIn(_emailController.text.trim(), _passwordController.text.trim());
+                      if (result is FirebaseAuthException) {
+                        setState(() => error = 'Invalid email and password combination');
+                      }
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(12),
@@ -122,6 +126,21 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                // Log in error
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    error,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -147,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Don''t have an account?',
+                      "Don't have an account?",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

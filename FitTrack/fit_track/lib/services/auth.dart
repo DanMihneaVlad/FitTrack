@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_track/models/user_model.dart';
+import 'package:fit_track/services/database.dart';
 
 class AuthService {
 
@@ -7,16 +9,19 @@ class AuthService {
 
   Future signIn(String email, String password) async {
     try {
-
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      
+      await _auth.signInWithEmailAndPassword(
         email: email,
         password: password
       );
 
-    } catch(e) {
-
-      print(e.toString());
-      return null;
+      final user = _auth.currentUser;
+      if (user != null) {
+        print(user);
+      }
+      
+    } on FirebaseAuthException catch (e) {
+      return e;
     }
   }
 
@@ -25,27 +30,32 @@ class AuthService {
       
       if (password == confirmedPassword) {
 
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, 
           password: password
         );
 
-        await addUser(email, firstName, lastName);
+        User? registeredUser = userCredential.user;
+
+        if (registeredUser != null) {
+          await DatabaseService(uid: registeredUser.uid).updateUserData(firstName, lastName, email);
+        }
 
       }
 
-    } catch(e) {
-      print(e.toString());
-      return null;
+    } on FirebaseAuthException catch (e) {
+      return e;
     }
   }
 
-  Future addUser(String email, String firstName, String lastName) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'Email' : email,
-      'First Name' : firstName,
-      'Last Name' : lastName,
-    });
+  Future signOut() async {
+    try {
+
+      return await _auth.signOut();
+
+    } catch (e) {
+      return null;
+    }
   }
 
 }
