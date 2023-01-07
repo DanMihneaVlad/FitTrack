@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_track/screens/recipes/recipes.dart';
 import 'package:fit_track/services/auth.dart';
+import 'package:fit_track/widgets/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.blue),
+      appBar: CustomAppBar(title: allDestinations[currentPageIndex].title, backButton: false),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {

@@ -1,3 +1,5 @@
+import 'package:fit_track/widgets/custom_appbar.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -11,6 +13,8 @@ class AddRecipe extends StatefulWidget {
 class _AddRecipeState extends State<AddRecipe> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: CustomAppBar(title: 'Add recipe', backButton: true),
+    );
   }
 }
