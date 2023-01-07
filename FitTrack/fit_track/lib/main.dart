@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         value: FirebaseAuth.instance.authStateChanges(),
         initialData: null,
         child: MaterialApp(
+          title: 'FitTrack',
           home: Wrapper(),
       ),
     );
