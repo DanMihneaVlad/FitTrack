@@ -17,5 +17,13 @@ class RecipeProvider extends ChangeNotifier {
 
   Future _getUserRecipesFuture() async {
     recipes = await _recipeService.getUserRecipes();
+    addDummyRecipe();
+  }
+
+  addDummyRecipe() {
+    recipes.add(RecipeModel(uid: "test", userId: "test", recipeName: "Pork"));
+    recipes.add(RecipeModel(uid: "test1", userId: "test1", recipeName: "Pizza"));
+    recipes.add(RecipeModel(uid: "test2", userId: "test2", recipeName: "Burger"));
+    notifyListeners();
   }
 }
