@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: allDestinations[currentPageIndex].title, backButton: false),
+      appBar: CustomAppBar(title: allDestinations[currentPageIndex].title, backButton: false, signOutButton: true),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {

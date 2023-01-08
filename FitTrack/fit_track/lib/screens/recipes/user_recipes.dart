@@ -26,7 +26,7 @@ class _UserRecipesWidgetState extends State<UserRecipesWidget> {
   @override
   Widget build(BuildContext context) {
 
-    var provider = Provider.of<RecipeProvider>(context);
+    var provider = context.watch<RecipeProvider>();
 
     return FutureBuilder(
       future: provider.getUserRecipesFuture,

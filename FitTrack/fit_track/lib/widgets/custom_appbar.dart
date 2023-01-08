@@ -1,12 +1,14 @@
+import 'package:fit_track/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
-  const CustomAppBar({super.key, required this.title, required this.backButton});
+  const CustomAppBar({super.key, required this.title, required this.backButton, this.signOutButton = false});
 
   final String title;
   final bool backButton;
+  final bool signOutButton;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,10 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         style: TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.blue,
-      leading: _getBackButton(context)
+      leading: _getBackButton(context),
+      actions: <Widget>[
+        _getSignOutButton(context)
+      ],
     );
   }
 
@@ -29,6 +34,23 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       return IconButton(
         onPressed: () => Navigator.pop(context), 
         icon: Icon(Icons.keyboard_arrow_left)
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _getSignOutButton(BuildContext context) {
+    if (signOutButton) {
+      
+      final AuthService _auth = AuthService();
+
+      return IconButton(
+        onPressed: () async {
+          await _auth.signOut();
+        }, 
+        tooltip: 'Sign out',
+        icon: Icon(Icons.logout_outlined)
       );
     } else {
       return Container();

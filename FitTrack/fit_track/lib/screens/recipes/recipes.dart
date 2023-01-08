@@ -1,5 +1,6 @@
 import 'package:fit_track/providers/recipe_provider.dart';
 import 'package:fit_track/screens/recipes/add_recipe.dart';
+import 'package:fit_track/screens/recipes/other_recipes.dart';
 import 'package:fit_track/screens/recipes/user_recipes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -34,6 +35,8 @@ class _RecipesPageState extends State<RecipesPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    var provider = context.watch<RecipeProvider>();
 
     return Scaffold(
       body: SafeArea(
@@ -90,14 +93,18 @@ class _RecipesPageState extends State<RecipesPage> {
               SizedBox(height: 20),
 
               Expanded(
-                child: UserRecipesWidget(search: _searchContoller.text.trim()),
+                child: _getRecipePage(),
               ),
 
             ],
           )
         ),
       ),
-      floatingActionButton: _getFAB()
+      floatingActionButton: Consumer<RecipeProvider>(
+        builder: (context, value, child) {
+          return _getFAB();
+        },
+      )
     );
   }
 
@@ -110,11 +117,22 @@ class _RecipesPageState extends State<RecipesPage> {
         onPressed: () => { 
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => AddRecipe()
+              builder: (_) => ChangeNotifierProvider.value(
+                value: context.read<RecipeProvider>(),
+                child: AddRecipe(),
+              )
             )
           ),
         },
       );
+    }
+  }
+
+  Widget _getRecipePage() {
+    if (_selectedRecipes[0]) {
+      return UserRecipesWidget(search: _searchContoller.text.trim());
+    } else {
+      return OtherRecipesWidget();
     }
   }
 }

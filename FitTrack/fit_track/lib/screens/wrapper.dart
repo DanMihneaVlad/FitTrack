@@ -15,13 +15,13 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<User?>(context);
 
     if (user == null) {
-      return AuthPage();
+      return const AuthPage();
     } else {
       return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (BuildContext ctx) => RecipeProvider(uid: user.uid))
+          ChangeNotifierProvider(create: (_) => RecipeProvider(uid: user.uid))
         ],
-        child: HomePage()
+        child: const HomePage()
       );
     }
   }
