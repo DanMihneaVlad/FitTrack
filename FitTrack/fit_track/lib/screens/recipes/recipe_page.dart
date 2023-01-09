@@ -48,7 +48,7 @@ class _RecipePageState extends State<RecipePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
                   alignment: Alignment.center,
-                  child: Image.asset("assets/img/pizza.jpg",
+                  child: Image.network(widget.recipe.imageUrl,
                       height: 220, fit: BoxFit.cover),
                 ),
               ),
@@ -62,14 +62,14 @@ class _RecipePageState extends State<RecipePage> {
                     children: [
                       Icon(Icons.kitchen, color: Colors.blue[500]),
                       const Text('Prep time'),
-                      Text(widget.recipe.prepTime),
+                      Text(widget.recipe.prepTime + ' min'),
                     ],
                   ),
                   Column(
                     children: [
                       Icon(Icons.timer, color: Colors.blue[500]),
                       const Text('Cook time'),
-                      Text(widget.recipe.cookTime),
+                      Text(widget.recipe.cookTime + ' min'),
                     ],
                   ),
                   Column(

@@ -1,30 +1,74 @@
 import 'package:fit_track/models/recipe_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import '../services/recipe_service.dart';
 
 class RecipeProvider extends ChangeNotifier {
-
   late RecipeService _recipeService;
   List<RecipeModel> recipes = [];
+  List<RecipeModel> otherRecipes = [];
   late Future getUserRecipesFuture;
+  late Future getOtherRecipesFuture;
   final String uid;
 
-  RecipeProvider({ required this.uid }) {
+  RecipeProvider({required this.uid}) {
     _recipeService = RecipeService(uid: uid);
     getUserRecipesFuture = _getUserRecipesFuture();
-    
+    getOtherRecipesFuture = _getOtherRecipesFuture();
   }
 
   Future _getUserRecipesFuture() async {
     recipes = await _recipeService.getUserRecipes();
-    addDummyRecipe();
   }
 
-  Future addDummyRecipe() async {
-    try{
-      recipes.add(RecipeModel(uid: "test", userId: "test", recipeName: "PorkPorkPorkPorkPork PorkPorkPork", ingredients: ["pork"], instructions: "We start by cooking bite-sized chicken breast and chopped onion in a large high-sided ovenproof skillet. It's important to use a large high-sided ovenproof skillet as it has the capacity to cook the ingredients without overcrowding the pan. Flour is added, then milk is added and brought to a boil for 1 minute. Make sure to stir frequently during this step. The flour helps thicken the casserole and the reduced-fat milk makes it creamy without the added fat.We start by cooking bite-sized chicken breast and chopped onion in a large high-sided ovenproof skillet. It's important to use a large high-sided ovenproof skillet as it has the capacity to cook the ingredients without overcrowding the pan. Flour is added, then milk is added and brought to a boil for 1 minute. Make sure to stir frequently during this step. The flour helps thicken the casserole and the reduced-fat milk makes it creamy without the added fat.", prepTime: "20 min", cookTime: "1 hour", portions: "1", kcal: 100, carbs: 1, fat: 1, sugars: 1, protein: 10));
-      recipes.add(RecipeModel(uid: "test1", userId: "test1", recipeName: "Pizza", ingredients: ["salamisalamisalamisalamisalamisalamisalamisalami with pizza salamisalamisalamisalamisalami with pizzabigaf salamisalamisalamisalamisalamisalamisalamisalamisalamisalamisalamisalamisalamisalamisalamisalamisalami", "tomatoes"], instructions: "Cook pizza", prepTime: "20 min", cookTime: "1 hour", portions: "1", kcal: 100, carbs: 1, fat: 1, sugars: 1, protein: 10));
-      recipes.add(RecipeModel(uid: "test2", userId: "test2", recipeName: "Burger", ingredients: ["bun", "patty"], instructions: "Make burger", prepTime: "20 min", cookTime: "1 hour", portions: "1", kcal: 100, carbs: 1, fat: 1, sugars: 1, protein: 10));
+  Future _getOtherRecipesFuture() async {
+    otherRecipes = await _recipeService.getOtherRecipes();
+  }
+
+  Future addRecipe(
+      String recipeName,
+      XFile? image,
+      List<String> ingredients,
+      String instructions,
+      String prepTime,
+      String cookTime,
+      String portions,
+      String kcal,
+      String carbs,
+      String sugars,
+      String fat,
+      String protein) async {
+    try {
+      List<String> x = await _recipeService.addRecipe(
+          recipeName,
+          image,
+          ingredients,
+          instructions,
+          prepTime,
+          cookTime,
+          portions,
+          kcal,
+          carbs,
+          sugars,
+          fat,
+          protein);
+
+      recipes.add(RecipeModel(
+          uid: x[0],
+          userId: uid,
+          recipeName: recipeName,
+          imageUrl: x[1],
+          ingredients: ingredients,
+          instructions: instructions,
+          prepTime: prepTime,
+          cookTime: cookTime,
+          portions: portions,
+          kcal: double.parse(kcal),
+          carbs: double.parse(carbs),
+          sugars: double.parse(sugars),
+          fat: double.parse(fat),
+          protein: double.parse(protein)));
+
       notifyListeners();
     } on Exception catch (e) {
       return e;

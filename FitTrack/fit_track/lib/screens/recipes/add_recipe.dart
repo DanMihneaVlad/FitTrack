@@ -444,8 +444,21 @@ class _AddRecipeState extends State<AddRecipe> {
                         saveError = 'Please add an image for the recipe';
                       });
                     } else {
-                      dynamic result =
-                          context.read<RecipeProvider>().addDummyRecipe();
+                      dynamic result = context
+                          .read<RecipeProvider>()
+                          .addRecipe(
+                              _recipeNameController.text.trim(),
+                              _image,
+                              _ingredients,
+                              _instructionsController.text.trim(),
+                              _prepTimeController.text.trim(),
+                              _cookTimeController.text.trim(),
+                              _portionsController.text.trim(),
+                              _kcalController.text.trim(),
+                              _carbsController.text.trim(),
+                              _sugarsController.text.trim(),
+                              _fatController.text.trim(),
+                              _proteinController.text.trim());
                       if (result is Exception) {
                         setState(() {
                           saveError = 'Error when saving the recipe';

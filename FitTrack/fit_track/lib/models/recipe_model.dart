@@ -5,6 +5,7 @@ class RecipeModel {
   final String uid;
   String userId;
   String recipeName;
+  String imageUrl;
   List<String> ingredients;
   String instructions;
   String prepTime;
@@ -20,6 +21,7 @@ class RecipeModel {
       {required this.uid,
       required this.userId,
       required this.recipeName,
+      required this.imageUrl,
       required this.ingredients,
       required this.instructions,
       required this.prepTime,
@@ -36,16 +38,17 @@ class RecipeModel {
       uid: snapshot.id,
       userId: snapshot['userId'],
       recipeName: snapshot['recipeName'],
-      ingredients: [],
-      instructions: "",
-      prepTime: "",
-      cookTime: "",
-      portions: "",
-      kcal: 100.01,
-      carbs: 1.0,
-      sugars: 1.0,
-      fat: 1.0,
-      protein: 10.0
+      imageUrl: snapshot['imageUrl'],
+      ingredients: ['ingredients'],
+      instructions: snapshot['instructions'],
+      prepTime: snapshot['prepTime'],
+      cookTime: snapshot['cookTime'],
+      portions: snapshot['portions'],
+      kcal: snapshot['kcal'],
+      carbs: snapshot['carbs'],
+      sugars: snapshot['sugars'],
+      fat: snapshot['fat'],
+      protein: snapshot['protein']
     );
   }
 }

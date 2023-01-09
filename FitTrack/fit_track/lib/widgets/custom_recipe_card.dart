@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class RecipeCard extends StatelessWidget {
-  const RecipeCard({ super.key, required this.recipe });
+  const RecipeCard({super.key, required this.recipe});
 
   final RecipeModel recipe;
 
@@ -16,25 +16,35 @@ class RecipeCard extends StatelessWidget {
       child: Container(
         height: 140,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(255, 194, 194, 194),
-              spreadRadius: 1.5,
-              blurRadius: 5,
-            ),
-          ]
-        ),
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(255, 194, 194, 194),
+                spreadRadius: 1.5,
+                blurRadius: 5,
+              ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-          child: Row(
-            children: [
-              Container(
-                child: Image.asset("assets/img/pizza.jpg"),
-              )
-            ]
-          ),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Container(
+              child: Image.network(
+                recipe.imageUrl,
+                height: 120,
+                width: 200,
+              ),
+            ),
+            Text(
+              recipe.recipeName,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ]),
         ),
       ),
     );
