@@ -179,7 +179,7 @@ class _RecipePageState extends State<RecipePage> {
                     padding: EdgeInsets.only(left: 30),
                   ),
                   Expanded(
-                    child: Text(widget.recipe.description,
+                    child: Text(widget.recipe.instructions,
                         style: TextStyle(fontSize: 14)),
                   )
                 ],

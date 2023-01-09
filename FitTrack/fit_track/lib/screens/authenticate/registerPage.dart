@@ -187,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Register',
                           style: TextStyle(

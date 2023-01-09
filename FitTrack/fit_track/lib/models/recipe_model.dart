@@ -6,22 +6,22 @@ class RecipeModel {
   String userId;
   String recipeName;
   List<String> ingredients;
-  String description;
+  String instructions;
   String prepTime;
   String cookTime;
   String portions;
-  int kcal;
-  int carbs;
-  int sugars;
-  int fat;
-  int protein;
+  double kcal;
+  double carbs;
+  double sugars;
+  double fat;
+  double protein;
 
   RecipeModel(
       {required this.uid,
       required this.userId,
       required this.recipeName,
       required this.ingredients,
-      required this.description,
+      required this.instructions,
       required this.prepTime,
       required this.cookTime,
       required this.portions,
@@ -37,15 +37,15 @@ class RecipeModel {
       userId: snapshot['userId'],
       recipeName: snapshot['recipeName'],
       ingredients: [],
-      description: "",
+      instructions: "",
       prepTime: "",
       cookTime: "",
       portions: "",
-      kcal: 100,
-      carbs: 1,
-      sugars: 1,
-      fat: 1,
-      protein: 10
+      kcal: 100.01,
+      carbs: 1.0,
+      sugars: 1.0,
+      fat: 1.0,
+      protein: 10.0
     );
   }
 }
