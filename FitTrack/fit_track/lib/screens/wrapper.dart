@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_track/providers/diet_plan_provider.dart';
 import 'package:fit_track/providers/recipe_provider.dart';
+import 'package:fit_track/providers/user_details_provider.dart';
 import 'package:fit_track/screens/authenticate/authPage.dart';
 import 'package:fit_track/screens/authenticate/loginPage.dart';
 import 'package:fit_track/screens/main/main_page.dart';
@@ -19,7 +21,9 @@ class Wrapper extends StatelessWidget {
     } else {
       return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => RecipeProvider(uid: user.uid))
+          ChangeNotifierProvider(create: (_) => RecipeProvider(uid: user.uid)),
+          ChangeNotifierProvider(create: (_) => UserDetailsProvider(uid: user.uid)),
+          ChangeNotifierProvider(create: (_) => DietPlanProvider(uid: user.uid))
         ],
         child: const MainPage()
       );

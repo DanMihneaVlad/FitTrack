@@ -38,7 +38,7 @@ class AuthService {
         User? registeredUser = userCredential.user;
 
         if (registeredUser != null) {
-          await UserService(uid: registeredUser.uid).updateUserData(firstName, lastName, email);
+          await UserService(uid: registeredUser.uid).addUserData(firstName, lastName, email);
         }
 
       }

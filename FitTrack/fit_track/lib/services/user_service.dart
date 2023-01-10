@@ -9,32 +9,67 @@ class UserService {
 
   final CollectionReference<Map<String, dynamic>> usersCollection = FirebaseFirestore.instance.collection('users');
 
-  Future updateUserData(String firstName, String lastName, String email) async {
+  Future addUserData(String firstName, String lastName, String email) async {
 
-    double doublePlaceHolder = 0;
-    String stringPlaceHolder = '';
+    try {
 
-    final docData = {
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'age': doublePlaceHolder,
-      'weight': doublePlaceHolder,
-      'height': doublePlaceHolder,
-      'sex': stringPlaceHolder,
-      'activityLevel': stringPlaceHolder
-    };
+      double doublePlaceHolder = 0;
+      int intPlaceHolder = 0;
+      String stringPlaceHolder = '';
 
-    await usersCollection.doc(uid).set(docData);
+      final docData = {
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'age': intPlaceHolder,
+        'weight': doublePlaceHolder,
+        'height': intPlaceHolder,
+        'sex': stringPlaceHolder,
+        'activityLevel': stringPlaceHolder
+      };
+
+      await usersCollection.doc(uid).set(docData);
+
+    } on Exception catch (e) {
+      return e;
+    }
   }
 
   Future getUserDetails() async {
-    final DocumentSnapshot<Map<String, dynamic>> data = await usersCollection.doc(uid).get();
-    final user = UserModel.fromFirestore(data);
-    if (user != null) {
-      print(user);
-    } else {
-      print('Nothing');
+    try {
+
+      final DocumentSnapshot<Map<String, dynamic>> data = await usersCollection.doc(uid).get();
+      final user = UserModel.fromFirestore(data);
+
+      return user;
+
+    } on Exception catch (e) {
+      return e;
+    }
+  }
+
+  Future updateUserData(String firstName, String lastName, String email) async {
+
+    try {
+
+      double doublePlaceHolder = 0;
+      String stringPlaceHolder = '';
+
+      final docData = {
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'age': doublePlaceHolder,
+        'weight': doublePlaceHolder,
+        'height': doublePlaceHolder,
+        'sex': stringPlaceHolder,
+        'activityLevel': stringPlaceHolder
+      };
+
+      await usersCollection.doc(uid).set(docData);
+
+    } on Exception catch (e) {
+      return e;
     }
   }
 }
