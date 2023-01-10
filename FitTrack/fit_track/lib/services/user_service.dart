@@ -72,4 +72,23 @@ class UserService {
       return e;
     }
   }
+
+  Future updateUserInformation(String age, String height, String weight, String sex, String activityLevel) async {
+
+    try {
+
+      final docData = {
+        'age': int.parse(age),
+        'weight': double.parse(weight),
+        'height': int.parse(height),
+        'sex': sex,
+        'activityLevel': activityLevel
+      };
+
+      await usersCollection.doc(uid).update(docData);
+
+    } on Exception catch (e) {
+      return e;
+    }
+  }
 }

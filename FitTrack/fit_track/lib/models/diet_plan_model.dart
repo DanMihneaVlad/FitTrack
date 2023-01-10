@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DietPlanModel {
-  final String uid;
+  String uid;
   String userId;
   double calorieTarget;
   String dietType;
-  double perWeekTarget;
+  String perWeekTarget;
 
   DietPlanModel({
     required this.uid,

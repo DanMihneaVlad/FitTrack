@@ -27,4 +27,42 @@ class DietPlanService {
       return e;
     }
   }
+
+  Future addDietPlan(String userId, String dietType, String target, double calorieTarget) async {
+
+    try {
+
+      final docData = {
+        'userId': userId,
+        'calorieTarget': calorieTarget,
+        'dietType': dietType,
+        'perWeekTarget': target
+      };
+
+      DocumentReference addedDietPlan = await dietPlansCollection.add(docData);
+      DocumentSnapshot doc = await addedDietPlan.get();
+      
+      return doc.id;
+
+    } on Exception catch (e) {
+      return e;
+    }
+  }
+
+  Future updateDietPlan(String dietId, String dietType, String target, double calorieTarget) async {
+
+    try {
+
+      final docData = {
+        'calorieTarget': calorieTarget,
+        'dietType': dietType,
+        'perWeekTarget': target
+      };
+
+      await dietPlansCollection.doc(dietId).update(docData);
+
+    } on Exception catch (e) {
+      return e;
+    }
+  }
 }

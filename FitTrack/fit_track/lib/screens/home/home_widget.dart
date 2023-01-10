@@ -3,6 +3,7 @@ import 'package:fit_track/providers/diet_plan_provider.dart';
 import 'package:fit_track/providers/recipe_provider.dart';
 import 'package:fit_track/providers/user_details_provider.dart';
 import 'package:fit_track/screens/recipes/add_recipe.dart';
+import 'package:fit_track/widgets/custom_create_diet_plan_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -26,8 +27,9 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     var dietPlanProvider = context.watch<DietPlanProvider>();
+    var widgets = CustomCreateDietPlanWidgets().createWidgets(
+        'It appears you don\'t have a diet plan yet. Try creating one now by pressing the button below.');
 
     return FutureBuilder(
         future: Future.wait([
@@ -89,7 +91,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    height: 280,
+                    height: 380,
                     width: 400,
                     decoration: const BoxDecoration(
                         color: Colors.white,
@@ -105,44 +107,33 @@ class _HomeWidgetState extends State<HomeWidget> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 10.0),
                       child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: dietPlanProvider.dietPlan.uid.isEmpty
                               ? [
-                                  Icon(
-                                    Icons.error_outline,
-                                    color: Colors.green,
-                                    size: 60.0,
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Container(
-                                    child: Text(
-                                      'It appears you don\'t have a diet plan yet. Try creating one now by pressing the button below.',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
+                                  widgets[0],
+                                  widgets[1],
+                                  widgets[2],
                                   const SizedBox(height: 40),
                                   GestureDetector(
                                     onTap: () => {
                                       Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => ChangeNotifierProvider.value(
-                                            value: context.read<DietPlanProvider>(),
-                                            child: CreateDietPlan(),
-                                          )
-                                        )
-                                      )
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ChangeNotifierProvider.value(
+                                                    value: context.read<
+                                                        DietPlanProvider>(),
+                                                    child: CreateDietPlan(),
+                                                  )))
                                     },
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 30),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 30),
                                       child: Container(
                                         padding: EdgeInsets.all(16),
                                         decoration: BoxDecoration(
                                           color: Colors.green,
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: const Center(
                                           child: Text(

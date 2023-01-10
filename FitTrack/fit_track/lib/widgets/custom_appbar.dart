@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title,
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(color: Colors.white),
       ),
       backgroundColor: Colors.blue,
       leading: _getBackButton(context),
