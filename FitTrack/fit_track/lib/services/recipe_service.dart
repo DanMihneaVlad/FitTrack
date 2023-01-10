@@ -15,14 +15,14 @@ class RecipeService {
   Future<List<RecipeModel>> getUserRecipes() async {
     final QuerySnapshot<Map<String, dynamic>> response = await recipesCollection.where("userId", isEqualTo: uid).get();
     
-    final data = response.docs.map((doc) => RecipeModel.fromFirestore(doc)).toList();
+    final data = response.docs.map((DocumentSnapshot<Map<String,dynamic>> doc) => RecipeModel.fromFirestore(doc)).toList();
     return data;
   }
 
   Future<List<RecipeModel>> getOtherRecipes() async {
     final QuerySnapshot<Map<String, dynamic>> response = await recipesCollection.where("userId", isNotEqualTo: uid).get();
 
-    final data = response.docs.map((doc) => RecipeModel.fromFirestore(doc)).toList();
+    final data = response.docs.map((DocumentSnapshot<Map<String,dynamic>> doc) => RecipeModel.fromFirestore(doc)).toList();
     return data;
   }
 

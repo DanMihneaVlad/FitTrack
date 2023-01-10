@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_track/models/user_model.dart';
-import 'package:fit_track/services/database.dart';
+import 'package:fit_track/services/user_service.dart';
 
 class AuthService {
 
@@ -38,7 +38,7 @@ class AuthService {
         User? registeredUser = userCredential.user;
 
         if (registeredUser != null) {
-          await DatabaseService(uid: registeredUser.uid).updateUserData(firstName, lastName, email);
+          await UserService(uid: registeredUser.uid).updateUserData(firstName, lastName, email);
         }
 
       }

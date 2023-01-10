@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_track/providers/recipe_provider.dart';
 import 'package:fit_track/screens/authenticate/authPage.dart';
 import 'package:fit_track/screens/authenticate/loginPage.dart';
-import 'package:fit_track/screens/home/home.dart';
+import 'package:fit_track/screens/main/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,7 @@ class Wrapper extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => RecipeProvider(uid: user.uid))
         ],
-        child: const HomePage()
+        child: const MainPage()
       );
     }
   }

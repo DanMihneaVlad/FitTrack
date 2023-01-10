@@ -6,7 +6,7 @@ class RecipeModel {
   String userId;
   String recipeName;
   String imageUrl;
-  List<String> ingredients;
+  List<String>? ingredients;
   String instructions;
   String prepTime;
   String cookTime;
@@ -33,22 +33,23 @@ class RecipeModel {
       required this.fat,
       required this.protein});
 
-  factory RecipeModel.fromFirestore(QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
+  factory RecipeModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final data = snapshot.data();
     return RecipeModel(
       uid: snapshot.id,
-      userId: snapshot['userId'],
-      recipeName: snapshot['recipeName'],
-      imageUrl: snapshot['imageUrl'],
-      ingredients: ['ingredients'],
-      instructions: snapshot['instructions'],
-      prepTime: snapshot['prepTime'],
-      cookTime: snapshot['cookTime'],
-      portions: snapshot['portions'],
-      kcal: snapshot['kcal'],
-      carbs: snapshot['carbs'],
-      sugars: snapshot['sugars'],
-      fat: snapshot['fat'],
-      protein: snapshot['protein']
+      userId: data?['userId'],
+      recipeName: data?['recipeName'],
+      imageUrl: data?['imageUrl'],
+      ingredients: data?['ingredients'] is Iterable ? List.from(data?['ingredients']) : null,
+      instructions: data?['instructions'],
+      prepTime: data?['prepTime'],
+      cookTime: data?['cookTime'],
+      portions: data?['portions'],
+      kcal: data?['kcal'],
+      carbs: data?['carbs'],
+      sugars: data?['sugars'],
+      fat: data?['fat'],
+      protein: data?['protein']
     );
   }
 }

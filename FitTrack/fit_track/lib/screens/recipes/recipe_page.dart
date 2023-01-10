@@ -103,7 +103,7 @@ class _RecipePageState extends State<RecipePage> {
 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: widget.recipe.ingredients.map((str) {
+                children: widget.recipe.ingredients!.map((str) {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
