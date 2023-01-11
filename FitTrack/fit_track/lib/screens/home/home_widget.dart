@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_track/providers/diet_plan_provider.dart';
+import 'package:fit_track/providers/meals_provider.dart';
 import 'package:fit_track/providers/recipe_provider.dart';
 import 'package:fit_track/providers/user_details_provider.dart';
 import 'package:fit_track/screens/recipes/add_recipe.dart';
@@ -28,12 +29,14 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     var dietPlanProvider = context.watch<DietPlanProvider>();
+    var mealsProvider = context.watch<MealsProvider>();
     var widgets = CustomCreateDietPlanWidgets().createWidgets(
         'It appears you don\'t have a diet plan yet. Try creating one now by pressing the button below.');
 
     return FutureBuilder(
         future: Future.wait([
           dietPlanProvider.getDietPlan,
+          mealsProvider.getTodayDaySummary,
         ]),
         builder: (BuildContext ctx, AsyncSnapshot asyncSnapshot) {
           if (asyncSnapshot.connectionState == ConnectionState.done) {
@@ -149,7 +152,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                   )
                                 ]
-                              : []),
+                              : [
+                                Text(mealsProvider.todayDaySummary.uid != '' ? 'You have a day summary' : 'No day summary found'),
+                              ]),
                     ),
                   ),
                 ],

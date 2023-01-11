@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fit_track/models/food_model.dart';
 
 class MealsService {
 
@@ -19,6 +20,28 @@ class MealsService {
       } else {
         return null;
       }
+
+    } on Exception catch (e) {
+      return e;
+    }
+  }
+
+  Future addMeal(String daySummaryId, String mealType) async {
+
+    try {
+
+      double doublePlaceHolder = 0;
+
+      final docData = {
+        'daySummaryId': daySummaryId,
+        'mealType': mealType,
+        'foods': <String, FoodModel>{}
+      };
+
+      DocumentReference addedMeal = await mealsCollection.add(docData);
+      DocumentSnapshot doc = await addedMeal.get();
+      
+      return doc.id;
 
     } on Exception catch (e) {
       return e;

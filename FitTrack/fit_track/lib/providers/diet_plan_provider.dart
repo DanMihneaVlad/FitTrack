@@ -45,8 +45,8 @@ class DietPlanProvider extends ChangeNotifier {
       double calorieTarget = computeCalorieTarget(age, height, weight, sex, activityLevel, dietType, target);
 
       if (dietPlan.uid == '') {
-        String x = await _dietPlanService.addDietPlan(user.uid ,dietType, target, calorieTarget);
-        dietPlan.uid = uid;
+        String dietPlanUid = await _dietPlanService.addDietPlan(user.uid ,dietType, target, calorieTarget);
+        dietPlan.uid = dietPlanUid;
         dietPlan.userId = user.uid;
         dietPlan.calorieTarget = calorieTarget;
         dietPlan.dietType = dietType;

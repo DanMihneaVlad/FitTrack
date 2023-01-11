@@ -1,5 +1,6 @@
 import 'package:fit_track/providers/diet_plan_provider.dart';
 import 'package:fit_track/widgets/custom_appbar.dart';
+import 'package:fit_track/widgets/custom_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -319,7 +320,7 @@ class _CreateDietPlanState extends State<CreateDietPlan> {
                   } else {
                     showModalBottomSheet(
                         context: context,
-                        builder: ((builder) => CustomBottomSheet()));
+                        builder: ((builder) => CustomBottomSheet().createCustomBottomSheet('Successfully created a diet plan')));
                     //Navigator.pop(context);
                     clearControllers();
                   }
@@ -368,19 +369,4 @@ class _CreateDietPlanState extends State<CreateDietPlan> {
     _weightController.clear();
   }
 
-  Widget CustomBottomSheet() {
-    return Container(
-      height: 100,
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Column(children: [
-        Text(
-          'Successfully created a diet plan',
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        SizedBox(height: 20),
-      ]),
-    );
-  }
 }
