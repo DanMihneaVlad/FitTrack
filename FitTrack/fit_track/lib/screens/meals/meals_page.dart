@@ -1,4 +1,5 @@
 import 'package:fit_track/screens/home/home_widget.dart';
+import 'package:fit_track/screens/meals/food_page.dart';
 import 'package:fit_track/widgets/custom_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../../providers/diet_plan_provider.dart';
 import '../../providers/meals_provider.dart';
 import '../../widgets/custom_create_diet_plan_widgets.dart';
+import '../../widgets/custom_meal_card.dart';
 
 const List<String> mealTypes = <String>[
   'Breakfast',
@@ -47,47 +49,70 @@ class _MealsPageState extends State<MealsPage> {
             } else {
               return Scaffold(
                 body: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(height: 20),
-                        Container(
-                          height: 230,
-                          width: 400,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(12)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromARGB(255, 194, 194, 194),
-                                  spreadRadius: 1.5,
-                                  blurRadius: 5,
-                                ),
-                              ]),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 10.0),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: dietPlanProvider.dietPlan.uid.isEmpty
-                                    ? [
-                                        widgets[0],
-                                        widgets[1],
-                                        widgets[2],
-                                      ]
-                                    : [
-                                        Text(mealsProvider.todayDaySummary.uid !=
-                                                ''
-                                            ? 'You have a day summary'
-                                            : 'No day summary found'),
-                                      ]),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Container(
+                            height: 230,
+                            width: 400,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 194, 194, 194),
+                                    spreadRadius: 1.5,
+                                    blurRadius: 5,
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 10.0),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: dietPlanProvider.dietPlan.uid.isEmpty
+                                      ? [
+                                          widgets[0],
+                                          widgets[1],
+                                          widgets[2],
+                                        ]
+                                      : [
+                                          Text(
+                                              mealsProvider.todayDaySummary.uid !=
+                                                      ''
+                                                  ? 'You have a day summary'
+                                                  : 'No day summary found'),
+                                        ]),
+                            ),
                           ),
                         ),
+                        const SizedBox(height: 20),
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: mealsProvider.meals.length,
+                              itemBuilder: (BuildContext ctx, int index) {
+                                return GestureDetector(
+                                  onTap: () => {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                ChangeNotifierProvider.value(
+                                                  value: context
+                                                      .read<MealsProvider>(),
+                                                  child: FoodPage(meal: mealsProvider.meals[index],),
+                                                ))),
+                                  },
+                                  child: MealCard(
+                                      meal: mealsProvider.meals[index]),
+                                );
+                              }),
+                        )
                       ],
                     ),
-                  ),
                 ),
                 floatingActionButton: dietPlanProvider.dietPlan.uid.isNotEmpty
                     ? FloatingActionButton(
@@ -108,8 +133,10 @@ class _MealsPageState extends State<MealsPage> {
                                 TextButton(
                                     onPressed: (() async {
                                       dynamic result =
-                                          await mealsProvider.addMeal(_mealDescriptionController.text.trim());
-                                      
+                                          await mealsProvider.addMeal(
+                                              _mealDescriptionController.text
+                                                  .trim());
+
                                       _mealDescriptionController.clear();
                                       Navigator.of(context).pop();
                                     }),

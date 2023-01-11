@@ -63,4 +63,8 @@ class DaySummaryService {
       return e;
     }
   }
+
+  Future updateDaySummary(DaySummaryModel daySummary) async {
+    
+  }
 }

@@ -25,9 +25,18 @@ class MealsProvider extends ChangeNotifier {
 
     if (_daySummary is DaySummaryModel) {
       todayDaySummary = _daySummary;
+      try {
+        await _getTodayMealsFuture(todayDaySummary.uid);
+      } on Exception catch (e) {
+        return e;
+      }
     } else {
       todayDaySummary = _createDefaultDaySummary();
     }
+  }
+
+  Future _getTodayMealsFuture(String daySummaryId) async {
+    meals = await _mealsService.getTodayMeals(daySummaryId);
   }
 
   Future addMeal(String mealType) async {
@@ -42,6 +51,8 @@ class MealsProvider extends ChangeNotifier {
       }
 
       String mealId = await _mealsService.addMeal(todayDaySummary.uid, mealType);
+      MealModel meal = _createMeal(mealId, todayDaySummary.uid, mealType);
+      meals.add(meal);
 
       notifyListeners();
     } on Exception catch (e) {
@@ -55,6 +66,6 @@ class MealsProvider extends ChangeNotifier {
   }
 
   MealModel _createMeal(String mealId, String daySummaryId, String mealType) {
-    return MealModel(uid: mealId, daySummaryId: daySummaryId, mealType: mealType, foods: <String, FoodModel>{});
+    return MealModel(uid: mealId, daySummaryId: daySummaryId, mealType: mealType, foods: <FoodModel>[]);
   }
 }
