@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen[200],
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -145,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 10),
           
+                /*
                 // Forgot password
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 SizedBox(height: 10),
-          
+                */
                 // Register
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

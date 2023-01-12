@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_track/screens/home/home_page.dart';
 import 'package:fit_track/screens/meals/meals_page.dart';
+import 'package:fit_track/screens/profile/profile_page.dart';
 import 'package:fit_track/screens/recipes/recipes.dart';
 import 'package:fit_track/services/auth.dart';
 import 'package:fit_track/widgets/custom_appbar.dart';
@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     MealsPage(),
     RecipesPage(),
-    Center(child: Text('My profile'),),
+    ProfilePage(),
   ];
 
   @override
