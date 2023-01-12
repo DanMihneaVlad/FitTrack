@@ -42,7 +42,7 @@ class CustomFoodCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Nutriment data per 100g',
+              'Nutriment data',
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -100,7 +100,7 @@ class CustomFoodCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Quantity: ' + food.quantity.toString(),
+              'Quantity: ' + food.quantity.toString() + 'g',
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),

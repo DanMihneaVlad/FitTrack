@@ -53,7 +53,7 @@ class _ScanProductState extends State<ScanProduct> {
                   onTap: () async {
                     await scanBarCode();
 
-                    scanResult = '5449000131805';
+                    //scanResult = '5449000131805';
 
                     if (scanResult != '-1') {
                       showDialog(

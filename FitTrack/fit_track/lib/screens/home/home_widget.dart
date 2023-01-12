@@ -95,7 +95,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    height: 480,
+                    height: 460,
                     width: 400,
                     decoration: const BoxDecoration(
                         color: Colors.white,
@@ -155,7 +155,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 ]
                               : [
                                 CustomDaySummary(title: 'Today\'s summary', dietPlan: dietPlanProvider.dietPlan, daySummary: mealsProvider.todayDaySummary),
-                                const SizedBox(height: 40),
+                                const SizedBox(height: 30),
                                   GestureDetector(
                                     onTap: () => {
                                       Navigator.of(context).push(
