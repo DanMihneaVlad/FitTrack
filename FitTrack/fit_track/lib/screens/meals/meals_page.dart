@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../providers/diet_plan_provider.dart';
 import '../../providers/meals_provider.dart';
 import '../../widgets/custom_create_diet_plan_widgets.dart';
+import '../../widgets/custom_day_summary.dart';
 import '../../widgets/custom_meal_card.dart';
 
 const List<String> mealTypes = <String>[
@@ -57,7 +58,7 @@ class _MealsPageState extends State<MealsPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: Container(
-                          height: 230,
+                          height: 380,
                           width: 400,
                           decoration: const BoxDecoration(
                               color: Colors.white,
@@ -82,11 +83,7 @@ class _MealsPageState extends State<MealsPage> {
                                         widgets[2],
                                       ]
                                     : [
-                                        Text(
-                                            mealsProvider.todayDaySummary.uid !=
-                                                    ''
-                                                ? 'You have a day summary'
-                                                : 'No day summary found'),
+                                        CustomDaySummary(title: 'Today\'s summary', dietPlan: dietPlanProvider.dietPlan, daySummary: mealsProvider.todayDaySummary,),
                                       ]),
                           ),
                         ),

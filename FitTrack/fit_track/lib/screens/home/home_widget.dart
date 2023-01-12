@@ -11,6 +11,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/custom_day_summary.dart';
 import 'create_diet_plan.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -94,7 +95,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    height: 380,
+                    height: 480,
                     width: 400,
                     decoration: const BoxDecoration(
                         color: Colors.white,
@@ -153,7 +154,42 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   )
                                 ]
                               : [
-                                Text(mealsProvider.todayDaySummary.uid != '' ? 'You have a day summary' : 'No day summary found'),
+                                CustomDaySummary(title: 'Today\'s summary', dietPlan: dietPlanProvider.dietPlan, daySummary: mealsProvider.todayDaySummary),
+                                const SizedBox(height: 40),
+                                  GestureDetector(
+                                    onTap: () => {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ChangeNotifierProvider.value(
+                                                    value: context.read<
+                                                        DietPlanProvider>(),
+                                                    child: CreateDietPlan(),
+                                                  )))
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 30),
+                                      child: Container(
+                                        padding: EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'Update diet plan',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
                               ]),
                     ),
                   ),
