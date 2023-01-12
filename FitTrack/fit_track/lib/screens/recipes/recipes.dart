@@ -24,12 +24,8 @@ class _RecipesPageState extends State<RecipesPage> {
 
   final List<bool> _selectedRecipes = <bool>[true, false];
 
-  final _searchContoller = TextEditingController();
-
   @override
   void dispose() {
-    _searchContoller.dispose();
-
     super.dispose();
   }
 
@@ -69,28 +65,6 @@ class _RecipesPageState extends State<RecipesPage> {
               ),
 
               SizedBox(height: 10),
-          
-              // Search textfield
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: TextField(
-                  controller: _searchContoller,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    hintText: 'Search',
-                    fillColor: Colors.grey[250],
-                    filled: true
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
 
               Expanded(
                 child: _getRecipePage(),
@@ -130,7 +104,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Widget _getRecipePage() {
     if (_selectedRecipes[0]) {
-      return UserRecipesWidget(search: _searchContoller.text.trim());
+      return UserRecipesWidget();
     } else {
       return OtherRecipesWidget();
     }

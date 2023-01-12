@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_track/models/food_model.dart';
 import 'package:fit_track/models/meal_model.dart';
+import 'package:openfoodfacts/model/Product.dart';
 
 class MealsService {
 
@@ -29,8 +30,7 @@ class MealsService {
 
       final docData = {
         'daySummaryId': daySummaryId,
-        'mealType': mealType,
-        'foods': <String, FoodModel>{}
+        'mealType': mealType
       };
 
       DocumentReference addedMeal = await mealsCollection.add(docData);
@@ -43,7 +43,20 @@ class MealsService {
     }
   }
 
-  Future updateMeal(String mealId, List<FoodModel> foods) async {
+  Future updateMeal(String mealId, int quantity, FoodModel food, List<FoodModel> foods) async {
 
+    try {
+
+      foods.add(food);
+
+      final docData = {
+        'foods': foods
+      };
+
+      await mealsCollection.doc(mealId).update(docData);
+
+    } on Exception catch (e) {
+      return e;
+    }
   }
 }

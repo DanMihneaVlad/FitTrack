@@ -64,7 +64,28 @@ class DaySummaryService {
     }
   }
 
-  Future updateDaySummary(DaySummaryModel daySummary) async {
+  Future updateDaySummary(DaySummaryModel daySummary, double kcal, double carbs, double sugars, double fats, double proteins) async {
     
+    try {
+
+      double newCaloriesConsumed = daySummary.caloriesConsumed + kcal;
+      double newCarbs = daySummary.carbs + carbs;
+      double newSugars = daySummary.sugars + sugars;
+      double newFats = daySummary.fats + fats;
+      double newProteins = daySummary.proteins + proteins;
+
+      final docData = {
+        'caloriesConsumed': newCaloriesConsumed,
+        'carbs': newCarbs,
+        'sugars': newSugars,
+        'fats': newFats,
+        'proteins': newProteins
+      };
+
+      await daySummaryCollection.doc(daySummary.uid).update(docData);
+
+    } on Exception catch (e) {
+      return e;
+    }
   }
 }

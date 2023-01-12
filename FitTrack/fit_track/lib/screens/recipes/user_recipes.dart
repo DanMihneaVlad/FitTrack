@@ -8,9 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class UserRecipesWidget extends StatefulWidget {
-  UserRecipesWidget({super.key, required this.search});
-
-  String search;
+  UserRecipesWidget({super.key});
 
   @override
   State<UserRecipesWidget> createState() => _UserRecipesWidgetState();

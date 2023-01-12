@@ -1,12 +1,14 @@
+import 'package:fit_track/models/food_model.dart';
 import 'package:fit_track/models/meal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class MealCard extends StatelessWidget {
-  const MealCard({super.key, required this.meal});
+  const MealCard({super.key, required this.meal, required this.foods});
 
   final MealModel meal;
+  final List<FoodModel> foods;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class MealCard extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            Text(meal.foods.length.toString() + ' food products added', textAlign: TextAlign.center,)
+            Text(foods.length.toString() + ' food products added', textAlign: TextAlign.center,)
           ]),
         ),
       ),
